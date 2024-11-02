@@ -27,12 +27,12 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	const { setArticleState } = props;
 	const [formState, setFormState] =
 		useState<ArticleStateType>(defaultArticleState);
-	const [isOpened, setIsOpened] = useState<boolean>(false);
+	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
 	const submitForm = (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		setArticleState(formState);
-		setIsOpened(false);
+		setIsMenuOpen(false);
 	};
 
 	const resetForm = (evt: FormEvent<HTMLFormElement>) => {
@@ -53,15 +53,18 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	return (
 		<>
 			<ArrowButton
-				isOpen={isOpened}
-				onClick={() => setIsOpened((currentIsOpened) => !currentIsOpened)}
+				isOpen={isMenuOpen}
+				onClick={() => setIsMenuOpen((currentIsOpened) => !currentIsOpened)}
 			/>
 			<div
-				onClick={() => setIsOpened(false)}
-				className={clsx(styles.overlay, isOpened && styles.overlay_open)}></div>
+				onClick={() => setIsMenuOpen(false)}
+				className={clsx(
+					styles.overlay,
+					isMenuOpen && styles.overlay_open
+				)}></div>
 			<aside
-				onClick={() => setIsOpened(true)}
-				className={clsx(styles.container, isOpened && styles.container_open)}>
+				onClick={() => setIsMenuOpen(true)}
+				className={clsx(styles.container, isMenuOpen && styles.container_open)}>
 				<form onSubmit={submitForm} onReset={resetForm} className={styles.form}>
 					<Text as={'h2'} size={31} weight={800} align='center' uppercase>
 						Задайте параметры
@@ -100,12 +103,7 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 					/>
 					<div className={styles.bottomContainer}>
 						<Button title='Сбросить' htmlType='reset' type='clear' />
-						<Button
-							title='Применить'
-							htmlType='submit'
-							type='apply'
-							// onClick={() => {}}
-						/>
+						<Button title='Применить' htmlType='submit' type='apply' />
 					</div>
 				</form>
 			</aside>
